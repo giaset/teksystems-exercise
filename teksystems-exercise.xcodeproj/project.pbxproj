@@ -1,0 +1,392 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		684A18AD19A5509700956589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18AC19A5509700956589 /* AppDelegate.swift */; };
+		684A18AF19A5509700956589 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 684A18AE19A5509700956589 /* Images.xcassets */; };
+		684A18BB19A5509700956589 /* teksystems_exerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		684A18B519A5509700956589 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 684A189F19A5509700956589 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 684A18A619A5509700956589;
+			remoteInfo = "teksystems-exercise";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		684A18A719A5509700956589 /* teksystems-exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "teksystems-exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		684A18AB19A5509700956589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		684A18AC19A5509700956589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		684A18AE19A5509700956589 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		684A18B419A5509700956589 /* teksystems-exerciseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "teksystems-exerciseTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		684A18B919A5509700956589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teksystems_exerciseTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		684A18A419A5509700956589 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		684A18B119A5509700956589 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		684A189E19A5509700956589 = {
+			isa = PBXGroup;
+			children = (
+				684A18A919A5509700956589 /* teksystems-exercise */,
+				684A18B719A5509700956589 /* teksystems-exerciseTests */,
+				684A18A819A5509700956589 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		684A18A819A5509700956589 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				684A18A719A5509700956589 /* teksystems-exercise.app */,
+				684A18B419A5509700956589 /* teksystems-exerciseTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		684A18A919A5509700956589 /* teksystems-exercise */ = {
+			isa = PBXGroup;
+			children = (
+				684A18AC19A5509700956589 /* AppDelegate.swift */,
+				684A18AE19A5509700956589 /* Images.xcassets */,
+				684A18AA19A5509700956589 /* Supporting Files */,
+			);
+			path = "teksystems-exercise";
+			sourceTree = "<group>";
+		};
+		684A18AA19A5509700956589 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				684A18AB19A5509700956589 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		684A18B719A5509700956589 /* teksystems-exerciseTests */ = {
+			isa = PBXGroup;
+			children = (
+				684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */,
+				684A18B819A5509700956589 /* Supporting Files */,
+			);
+			path = "teksystems-exerciseTests";
+			sourceTree = "<group>";
+		};
+		684A18B819A5509700956589 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				684A18B919A5509700956589 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		684A18A619A5509700956589 /* teksystems-exercise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 684A18BE19A5509700956589 /* Build configuration list for PBXNativeTarget "teksystems-exercise" */;
+			buildPhases = (
+				684A18A319A5509700956589 /* Sources */,
+				684A18A419A5509700956589 /* Frameworks */,
+				684A18A519A5509700956589 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "teksystems-exercise";
+			productName = "teksystems-exercise";
+			productReference = 684A18A719A5509700956589 /* teksystems-exercise.app */;
+			productType = "com.apple.product-type.application";
+		};
+		684A18B319A5509700956589 /* teksystems-exerciseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 684A18C119A5509700956589 /* Build configuration list for PBXNativeTarget "teksystems-exerciseTests" */;
+			buildPhases = (
+				684A18B019A5509700956589 /* Sources */,
+				684A18B119A5509700956589 /* Frameworks */,
+				684A18B219A5509700956589 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				684A18B619A5509700956589 /* PBXTargetDependency */,
+			);
+			name = "teksystems-exerciseTests";
+			productName = "teksystems-exerciseTests";
+			productReference = 684A18B419A5509700956589 /* teksystems-exerciseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		684A189F19A5509700956589 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = "Milton and Parc";
+				TargetAttributes = {
+					684A18A619A5509700956589 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					684A18B319A5509700956589 = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = 684A18A619A5509700956589;
+					};
+				};
+			};
+			buildConfigurationList = 684A18A219A5509700956589 /* Build configuration list for PBXProject "teksystems-exercise" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 684A189E19A5509700956589;
+			productRefGroup = 684A18A819A5509700956589 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				684A18A619A5509700956589 /* teksystems-exercise */,
+				684A18B319A5509700956589 /* teksystems-exerciseTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		684A18A519A5509700956589 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684A18AF19A5509700956589 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		684A18B219A5509700956589 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		684A18A319A5509700956589 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684A18AD19A5509700956589 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		684A18B019A5509700956589 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684A18BB19A5509700956589 /* teksystems_exerciseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		684A18B619A5509700956589 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 684A18A619A5509700956589 /* teksystems-exercise */;
+			targetProxy = 684A18B519A5509700956589 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		684A18BC19A5509700956589 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				METAL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		684A18BD19A5509700956589 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				METAL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		684A18BF19A5509700956589 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = "teksystems-exercise/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		684A18C019A5509700956589 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = "teksystems-exercise/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		684A18C219A5509700956589 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/teksystems-exercise.app/teksystems-exercise";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "teksystems-exerciseTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Debug;
+		};
+		684A18C319A5509700956589 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/teksystems-exercise.app/teksystems-exercise";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "teksystems-exerciseTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		684A18A219A5509700956589 /* Build configuration list for PBXProject "teksystems-exercise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				684A18BC19A5509700956589 /* Debug */,
+				684A18BD19A5509700956589 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		684A18BE19A5509700956589 /* Build configuration list for PBXNativeTarget "teksystems-exercise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				684A18BF19A5509700956589 /* Debug */,
+				684A18C019A5509700956589 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		684A18C119A5509700956589 /* Build configuration list for PBXNativeTarget "teksystems-exerciseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				684A18C219A5509700956589 /* Debug */,
+				684A18C319A5509700956589 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 684A189F19A5509700956589 /* Project object */;
+}
