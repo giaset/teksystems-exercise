@@ -36,12 +36,6 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         var addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addButtonPressed")
         self.navigationItem.rightBarButtonItem = addButton
         
-        // Setup location manager
-        // This API call does not exist in iOS < 8, so check before you call it
-        if (locationManager.respondsToSelector("requestWhenInUseAuthorization")) {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        
         setupMapView()
         setupTableView()
     }
@@ -53,13 +47,22 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     func setupMapView() {
         mapview = MKMapView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         mapview!.delegate = self
-        mapview!.showsUserLocation = true
         
         // Add a bottom border to the mapView to separate it from the tableView
         var bottomBorderThickness: CGFloat = 1
         mapViewBottomBorder.frame = CGRect(x: 0, y: heightOfExposedMapView-bottomBorderThickness, width: self.view.frame.width, height: bottomBorderThickness)
         mapViewBottomBorder.backgroundColor = UIColor.lightGrayColor().CGColor
         mapview!.layer.addSublayer(mapViewBottomBorder)
+        
+        // We need a CLLocationManager in iOS 8 to request location authorization before we can set showsUserLocation = true
+        locationManager.delegate = self
+        // This API call does not exist in iOS < 8, so check before you call it
+        if (locationManager.respondsToSelector("requestWhenInUseAuthorization")) {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            // If not in iOS8, we can just call this right away
+            mapview!.showsUserLocation = true
+        }
         
         self.view.addSubview(mapview)
         
@@ -134,6 +137,13 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
+    }
+    
+    // In iOS8, need to wait until user has authorized location before calling showsUserLocation = true
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if (status == .AuthorizedWhenInUse) {
+            mapview!.showsUserLocation = true
+        }
     }
     
 }
