@@ -22,6 +22,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     
     var tableview: UITableView?
     
+    var dummyView: UIView?
+    
     var isFullscreen = false
     
     override func viewDidLoad() {
@@ -35,12 +37,10 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         self.navigationItem.rightBarButtonItem = addButton
         
         // Setup location manager
-        locationManager.delegate = self
         // This API call does not exist in iOS < 8, so check before you call it
         if (locationManager.respondsToSelector("requestWhenInUseAuthorization")) {
             locationManager.requestWhenInUseAuthorization()
         }
-        locationManager.startUpdatingLocation()
         
         setupMapView()
         setupTableView()
@@ -52,9 +52,6 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
 
     func setupMapView() {
         mapview = MKMapView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        mapview!.scrollEnabled = false
-        mapview!.zoomEnabled = false
-        mapview!.userInteractionEnabled = false
         mapview!.delegate = self
         mapview!.showsUserLocation = true
         
@@ -67,11 +64,14 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         self.view.addSubview(mapview)
         
         // When the mapView is tapped, go fullscreen. Use a dummy view for this, because the mapView has userInteractionEnabled set to 'false'
-        var dummyView = UIView(frame: mapview!.frame)
+        dummyView = UIView(frame: mapview!.frame)
         var singleTap = UITapGestureRecognizer(target: self, action: "goFullscreen")
-        dummyView.addGestureRecognizer(singleTap)
+        dummyView!.addGestureRecognizer(singleTap)
         
         self.view.addSubview(dummyView)
+        
+        println(mapview!.centerCoordinate.latitude)
+        println(mapview!.centerCoordinate.longitude)
     }
     
     func setupTableView() {
@@ -94,6 +94,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                 didFinish in
                 if (didFinish) {
                     self.isFullscreen = true
+                    // disable the dummyView so it doesn't intercept touches over the map when in fullscreen
+                    self.dummyView!.userInteractionEnabled = false
                 }
                 })
             
@@ -111,6 +113,9 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                 if (didFinish) {
                     self.isFullscreen = false
                     
+                    // re-enable the gestureRecognizer on the dummyView
+                    self.dummyView!.userInteractionEnabled = true
+                    
                     // Show the mapView's bottom Border again
                     self.mapview!.layer.addSublayer(self.mapViewBottomBorder)
                     self.mapViewBottomBorder.hidden = false
@@ -124,6 +129,10 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     
     func setTableViewYTo(newY: CGFloat, onComplete: (Bool) -> ()) {
         UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: nil, animations: { self.tableview!.frame.origin.y = newY }, completion: onComplete)
+    }
+    
+    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        
     }
     
 }
