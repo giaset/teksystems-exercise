@@ -94,14 +94,15 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                 didFinish in
                 if (didFinish) {
                     self.isFullscreen = true
-                    // disable the dummyView so it doesn't intercept touches over the map when in fullscreen
-                    self.dummyView!.userInteractionEnabled = false
                 }
                 })
             
             // Lastly, give us a back button to exit fullscreen mode
             var backButton = UIBarButtonItem(title: "Close", style: .Bordered, target: self, action: "exitFullscreen")
             self.navigationItem.leftBarButtonItem = backButton
+            
+            // One more thing... Disable the dummyView so it doesn't intercept touches over the map when in fullscreen
+            self.dummyView!.userInteractionEnabled = false
         }
     }
     
@@ -113,9 +114,6 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                 if (didFinish) {
                     self.isFullscreen = false
                     
-                    // re-enable the gestureRecognizer on the dummyView
-                    self.dummyView!.userInteractionEnabled = true
-                    
                     // Show the mapView's bottom Border again
                     self.mapview!.layer.addSublayer(self.mapViewBottomBorder)
                     self.mapViewBottomBorder.hidden = false
@@ -124,6 +122,9 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
             
             // Hide the back button when not in fullscreen mode
             self.navigationItem.leftBarButtonItem = nil
+            
+            // Re-enable the gestureRecognizer on the dummyView
+            self.dummyView!.userInteractionEnabled = true
         }
     }
     
