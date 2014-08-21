@@ -41,7 +41,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     }
     
     func addButtonPressed() {
-        
+        presentViewController(UINavigationController(rootViewController: TEKAddPinViewController(style: .Grouped)), animated: true, completion: nil)
     }
 
     func setupMapView() {
@@ -75,7 +75,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     }
     
     func setupTableView() {
-        tableview = UITableView(frame: CGRect(x: 0, y: heightOfExposedMapView, width: self.view.frame.width, height: self.view.frame.height-heightOfExposedMapView+100)) // we add 100 pixels here to account for the bounce in our spring animation when the tableView pops back up, because otherwise it leaves our mapView exposed at the bottom
+        tableview = UITableView(frame: CGRect(x: 0, y: heightOfExposedMapView, width: self.view.frame.width, height: self.view.frame.height-heightOfExposedMapView+50)) // we add 100 pixels here to account for the bounce in our spring animation when the tableView pops back up, because otherwise it leaves our mapView exposed at the bottom
         tableview!.delegate = self
         tableview!.showsVerticalScrollIndicator = false
         
@@ -135,7 +135,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     }
     
     func setTableViewYTo(newY: CGFloat, onComplete: (Bool) -> ()) {
-        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: nil, animations: { self.tableview!.frame.origin.y = newY }, completion: onComplete)
+        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: nil, animations: { self.tableview!.frame.origin.y = newY }, completion: onComplete)
     }
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {

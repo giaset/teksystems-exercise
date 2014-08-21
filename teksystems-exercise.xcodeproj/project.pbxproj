@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680C4BAC19A6885300A00DD7 /* TEKAddPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */; };
 		684A18AD19A5509700956589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18AC19A5509700956589 /* AppDelegate.swift */; };
 		684A18AF19A5509700956589 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 684A18AE19A5509700956589 /* Images.xcassets */; };
 		684A18BB19A5509700956589 /* teksystems_exerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TEKAddPinViewController.swift; path = ViewControllers/TEKAddPinViewController.swift; sourceTree = "<group>"; };
 		684A18A719A5509700956589 /* teksystems-exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "teksystems-exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		684A18AB19A5509700956589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		684A18AC19A5509700956589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				684A18C419A550DB00956589 /* TEKMapViewController.swift */,
+				680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			files = (
 				684A18C519A550DB00956589 /* TEKMapViewController.swift in Sources */,
 				684A18AD19A5509700956589 /* AppDelegate.swift in Sources */,
+				680C4BAC19A6885300A00DD7 /* TEKAddPinViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +393,7 @@
 				684A18C019A5509700956589 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		684A18C119A5509700956589 /* Build configuration list for PBXNativeTarget "teksystems-exerciseTests" */ = {
 			isa = XCConfigurationList;
@@ -397,6 +402,7 @@
 				684A18C319A5509700956589 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
