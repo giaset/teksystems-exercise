@@ -41,7 +41,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     }
     
     func addButtonPressed() {
-        presentViewController(UINavigationController(rootViewController: TEKAddPinViewController(style: .Grouped)), animated: true, completion: nil)
+        presentViewController(UINavigationController(rootViewController: TEKAddPinViewController()), animated: true, completion: nil)
     }
 
     func setupMapView() {
