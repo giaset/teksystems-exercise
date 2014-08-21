@@ -13,7 +13,7 @@ import QuartzCore
 
 class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate {
     
-    let heightOfExposedMapView: CGFloat = 200
+    let heightOfExposedMapView: CGFloat = 300
     
     let locationManager = CLLocationManager()
     
@@ -25,12 +25,12 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     var dummyView: UIView?
     
     var isFullscreen = false
+    var userLocationHasBeenFound = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "My Places"
-        self.navigationController.navigationBar.translucent = false
         
         // Setup + button (top-right)
         var addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addButtonPressed")
@@ -66,19 +66,16 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         
         self.view.addSubview(mapview)
         
-        // When the mapView is tapped, go fullscreen. Use a dummy view for this, because the mapView has userInteractionEnabled set to 'false'
+        // When the mapView is tapped, go fullscreen. Use a dummy view for this to intercept taps over the mapView
         dummyView = UIView(frame: mapview!.frame)
         var singleTap = UITapGestureRecognizer(target: self, action: "goFullscreen")
         dummyView!.addGestureRecognizer(singleTap)
         
         self.view.addSubview(dummyView)
-        
-        println(mapview!.centerCoordinate.latitude)
-        println(mapview!.centerCoordinate.longitude)
     }
     
     func setupTableView() {
-        tableview = UITableView(frame: CGRect(x: 0, y: heightOfExposedMapView, width: self.view.frame.width, height: self.view.frame.height-heightOfExposedMapView+50))
+        tableview = UITableView(frame: CGRect(x: 0, y: heightOfExposedMapView, width: self.view.frame.width, height: self.view.frame.height-heightOfExposedMapView+100)) // we add 100 pixels here to account for the bounce in our spring animation when the tableView pops back up, because otherwise it leaves our mapView exposed at the bottom
         tableview!.delegate = self
         tableview!.showsVerticalScrollIndicator = false
         
@@ -99,6 +96,9 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
                     self.isFullscreen = true
                 }
                 })
+            
+            // Also stay centered on the same point as we were
+            adjustMapViewCenter(fullscreen: true)
             
             // Lastly, give us a back button to exit fullscreen mode
             var backButton = UIBarButtonItem(title: "Close", style: .Bordered, target: self, action: "exitFullscreen")
@@ -126,6 +126,9 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
             // Hide the back button when not in fullscreen mode
             self.navigationItem.leftBarButtonItem = nil
             
+            // Also stay centered on the same point as we were
+            adjustMapViewCenter(fullscreen: false)
+            
             // Re-enable the gestureRecognizer on the dummyView
             self.dummyView!.userInteractionEnabled = true
         }
@@ -136,7 +139,16 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
     }
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
-        
+        if (!userLocationHasBeenFound) {
+            userLocationHasBeenFound = true
+            
+            // Initial zoom of map on user's location to get proper scale
+            var region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            mapView.setRegion(region, animated: false)
+            
+            // Now correct our center to fit in the exposed mapView portion
+            adjustMapViewCenter(fullscreen: false)
+        }
     }
     
     // In iOS8, need to wait until user has authorized location before calling showsUserLocation = true
@@ -144,6 +156,30 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDel
         if (status == .AuthorizedWhenInUse) {
             mapview!.showsUserLocation = true
         }
+    }
+    
+    var deltaLatFor1px: CGFloat {
+        var distanceInPixelsBetweenRefPoints: CGFloat = 100
+        var referencePoint1 = mapview!.convertPoint(CGPoint(x: 0, y: 0), toCoordinateFromView: mapview)
+        var referencePoint2 = mapview!.convertPoint(CGPoint(x: 0, y: distanceInPixelsBetweenRefPoints), toCoordinateFromView: mapview)
+        var deltaLatBetweenRefPoints = referencePoint2.latitude - referencePoint1.latitude
+        return CGFloat(deltaLatBetweenRefPoints)/distanceInPixelsBetweenRefPoints
+    }
+    
+    // Shift our mapView's center upwards or downwards so that the blue dot is properly centered in the exposed portion
+    func adjustMapViewCenter(#fullscreen: Bool) {
+        var newCenter: CLLocationCoordinate2D
+        
+        var centerOffset = self.view.center.y - (heightOfExposedMapView/2)
+        var deltaLat = centerOffset * deltaLatFor1px
+        
+        if (fullscreen) {
+            newCenter = CLLocationCoordinate2D(latitude: mapview!.centerCoordinate.latitude-CLLocationDegrees(deltaLat), longitude: mapview!.centerCoordinate.longitude)
+        } else {
+            newCenter = CLLocationCoordinate2D(latitude: mapview!.centerCoordinate.latitude+CLLocationDegrees(deltaLat), longitude: mapview!.centerCoordinate.longitude)
+        }
+        
+        mapview!.setCenterCoordinate(newCenter, animated: true)
     }
     
 }
