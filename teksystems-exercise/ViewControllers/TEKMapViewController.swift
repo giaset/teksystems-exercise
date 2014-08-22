@@ -19,7 +19,6 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         setupMapView()
-        setupStatusBar()
     }
 
     func setupMapView() {
@@ -31,22 +30,14 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        // Only run this once
         if (!userLocationHasBeenFound) {
             userLocationHasBeenFound = true
             
             // Zoom and center on user's location
-            var region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            var region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.007, longitudeDelta: 0.007))
             mapView.setRegion(region, animated: false)
         }
-    }
-    
-    func setupStatusBar() {
-        var statusBarHeight: CGFloat = 20
-        var statusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: statusBarHeight))
-        statusBar.backgroundColor = UIColor.flatCarrotColor()
-        statusBar.alpha = 0.85
- 
-        view.addSubview(statusBar)
     }
     
 }

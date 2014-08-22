@@ -36,4 +36,12 @@ extension UIColor {
         return UIColor.colorFromHex("#f39c12")
     }
     
+    class func flatCloudsColor() -> UIColor {
+        return UIColor.colorFromHex("#ecf0f1")
+    }
+    
+    class func flatSilverColor() -> UIColor {
+        return UIColor.colorFromHex("#bdc3c7")
+    }
+    
 }
