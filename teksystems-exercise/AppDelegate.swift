@@ -8,14 +8,6 @@
 
 import UIKit
 
-extension UIColor {
-        
-        class func amethystColor() -> UIColor {
-            return UIColor(red: 0.608, green: 0.349, blue: 0.714, alpha: 1) /*#9b59b6*/
-        }
-        
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
@@ -25,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         // Stylin'
-        UINavigationBar.appearance().tintColor = UIColor.amethystColor()
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
 
-        self.window!.rootViewController = UINavigationController(rootViewController: TEKMapViewController())
+        self.window!.rootViewController = TEKMapViewController()
         
         self.window!.makeKeyAndVisible()
         return true
