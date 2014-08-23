@@ -15,6 +15,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     
     var userLocationHasBeenFound = false
     
+    var blackOverlayView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +26,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         
         setupMapView()
         setupButton()
+        setupBlackOverlayView()
     }
 
     func setupMapView() {
@@ -58,8 +61,25 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         plusButton.setTitle("+ ADD ADDRESS", forState: .Normal)
         plusButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
         plusButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        plusButton.addTarget(self, action: "plusButtonPressed", forControlEvents: .TouchUpInside)
         
         view.addSubview(plusButton)
+    }
+    
+    func plusButtonPressed() {
+        setBlackOverlayViewAlphaTo(0.5)
+    }
+    
+    func setupBlackOverlayView() {
+        blackOverlayView = UIView(frame: view.frame)
+        blackOverlayView!.backgroundColor = UIColor.blackColor()
+        blackOverlayView!.alpha = 0
+        
+        view.addSubview(blackOverlayView)
+    }
+    
+    func setBlackOverlayViewAlphaTo(alpha: CGFloat) {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0, options: nil, animations: { self.blackOverlayView!.alpha = alpha }, completion: nil)
     }
     
 }
