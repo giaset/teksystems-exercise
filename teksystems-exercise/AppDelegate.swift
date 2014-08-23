@@ -17,7 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         // Stylin'
-        UINavigationBar.appearance().barTintColor = UIColor.sunflowerColor()
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
+        UINavigationBar.appearance().barTintColor = UIColor.midnightBlueColor()
+        var attributes = NSMutableDictionary()
+        attributes.setValue(UIColor.whiteColor(), forKey: NSForegroundColorAttributeName)
+        attributes.setValue(UIFont.boldFlatFontOfSize(18), forKey: NSFontAttributeName)
+        UINavigationBar.appearance().titleTextAttributes = attributes
 
         self.window!.rootViewController = UINavigationController(rootViewController: TEKMapViewController())
         

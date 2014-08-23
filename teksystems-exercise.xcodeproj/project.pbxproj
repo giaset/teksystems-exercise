@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		680C4BAC19A6885300A00DD7 /* TEKAddPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */; };
+		681A740219A84C9E000F920A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 684BAC0819A84AE100C6F0D9 /* CoreText.framework */; };
 		684A18AD19A5509700956589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18AC19A5509700956589 /* AppDelegate.swift */; };
 		684A18AF19A5509700956589 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 684A18AE19A5509700956589 /* Images.xcassets */; };
 		684A18BB19A5509700956589 /* teksystems_exerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */; };
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681A740219A84C9E000F920A /* CoreText.framework in Frameworks */,
 				83F9BFB219C348C89EE8E868 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
