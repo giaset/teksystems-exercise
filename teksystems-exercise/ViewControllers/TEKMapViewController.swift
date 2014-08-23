@@ -18,6 +18,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     var blackOverlayView: UIView?
     
     var popup: UIView?
+    var addressTextField: FUITextField?
+    var descriptionTextField: FUITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,19 +66,21 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         plusButton.setTitle("+ ADD ADDRESS", forState: .Normal)
         plusButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
         plusButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        plusButton.addTarget(self, action: "plusButtonPressed", forControlEvents: .TouchUpInside)
+        plusButton.addTarget(self, action: "openPopup", forControlEvents: .TouchUpInside)
         
         view.addSubview(plusButton)
     }
     
-    func plusButtonPressed() {
+    func openPopup() {
         setBlackOverlayViewAlphaTo(0.5)
-        setPopupVerticalPositionTo((view.frame.height/2) - (popup!.frame.height/2))
+        setPopupVerticalPositionTo(40)
+        addressTextField!.becomeFirstResponder()
     }
     
-    func closeButtonPressed() {
+    func closePopup() {
         setBlackOverlayViewAlphaTo(0)
         setPopupVerticalPositionTo(600)
+        view.endEditing(true)
     }
     
     func setupBlackOverlayView() {
@@ -92,18 +96,41 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func setupPopup() {
+        let buttonPadding = 10
         let popupPadding = 20
-        let popupHeight = 250
+        
+        let buttonHeight = 44
+        let popupHeight = (4*buttonPadding)+(3*buttonHeight)
+        
         let popupWidth = Int(view.frame.width)-(2*popupPadding)
         
         popup = UIView(frame: CGRect(x: popupPadding, y: 600, width: popupWidth, height: popupHeight))
         popup!.backgroundColor = UIColor.midnightBlueColor()
         
-        let buttonPadding = 10
-        let buttonHeight = 44
         let buttonWidth = (popupWidth-(3*buttonPadding))/2
         let buttonY = popupHeight-buttonPadding-buttonHeight
         
+        /* STREET/CITY/PROVINCE TEXTFIELD*/
+        var addressField = FUITextField(frame: CGRect(x: buttonPadding, y: buttonPadding, width: buttonPadding+(buttonWidth*2), height: buttonHeight))
+        addressField.textFieldColor = UIColor.whiteColor()
+        addressField.textColor = UIColor.asbestosColor()
+        addressField.placeholder = "Street, City, Province"
+        addressField.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        addressField.font = UIFont.flatFontOfSize(14)
+        addressTextField = addressField
+        popup!.addSubview(addressField)
+        
+        /* DESCRIPTION TEXTFIELD*/
+        var descriptionField = FUITextField(frame: CGRect(x: buttonPadding, y: (2*buttonPadding)+buttonHeight, width: buttonPadding+(buttonWidth*2), height: buttonHeight))
+        descriptionField.textFieldColor = UIColor.whiteColor()
+        descriptionField.textColor = UIColor.asbestosColor()
+        descriptionField.placeholder = "Description"
+        descriptionField.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        descriptionField.font = UIFont.flatFontOfSize(14)
+        descriptionTextField = descriptionField
+        popup!.addSubview(descriptionField)
+        
+        /* CLOSE BUTTON */
         var closeButton = FUIButton(frame: CGRect(x: buttonPadding, y: buttonY, width: buttonWidth, height: buttonHeight))
         closeButton.buttonColor = UIColor.cloudsColor()
         closeButton.shadowColor = UIColor.asbestosColor()
@@ -112,9 +139,10 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         closeButton.setTitle("Close", forState: .Normal)
         closeButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
         closeButton.setTitleColor(UIColor.asbestosColor(), forState: .Normal)
-        closeButton.addTarget(self, action: "closeButtonPressed", forControlEvents: .TouchUpInside)
+        closeButton.addTarget(self, action: "closePopup", forControlEvents: .TouchUpInside)
         popup!.addSubview(closeButton)
         
+        /* SUBMIT BUTTON */
         var submitButton = FUIButton(frame: CGRect(x: (2*buttonPadding)+buttonWidth, y: buttonY, width: buttonWidth, height: buttonHeight))
         submitButton.buttonColor = UIColor.turquoiseColor()
         submitButton.shadowColor = UIColor.greenSeaColor()
@@ -130,13 +158,12 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func setPopupVerticalPositionTo(newY: CGFloat) {
-        UIView.animateWithDuration(0.85, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0, options: nil, animations: {
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: nil, animations: {
             self.popup!.frame.origin.y = newY
             }, completion: nil)
     }
     
     func submitButtonPressed() {
-        
     }
     
 }
