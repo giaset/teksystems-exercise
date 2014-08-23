@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Stylin'
         UINavigationBar.appearance().barTintColor = UIColor.flatCloudsColor()
 
-        self.window!.rootViewController = TEKMapViewController()
+        self.window!.rootViewController = UINavigationController(rootViewController: TEKMapViewController())
         
         self.window!.makeKeyAndVisible()
         return true
