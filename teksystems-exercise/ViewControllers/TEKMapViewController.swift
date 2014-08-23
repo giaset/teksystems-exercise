@@ -17,6 +17,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     
     var blackOverlayView: UIView?
     
+    var popup: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +29,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         setupMapView()
         setupButton()
         setupBlackOverlayView()
+        setupPopup()
     }
 
     func setupMapView() {
@@ -43,7 +46,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
             userLocationHasBeenFound = true
             
             // Zoom and center on user's location
-            var region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.007, longitudeDelta: 0.007))
+            var region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 100, 100)
             mapView.setRegion(region, animated: false)
         }
     }
@@ -68,6 +71,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     
     func plusButtonPressed() {
         setBlackOverlayViewAlphaTo(0.5)
+        setPopupVerticalPositionTo((view.frame.height/2) - (popup!.frame.height/2))
     }
     
     func setupBlackOverlayView() {
@@ -80,6 +84,22 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     
     func setBlackOverlayViewAlphaTo(alpha: CGFloat) {
         UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0, options: nil, animations: { self.blackOverlayView!.alpha = alpha }, completion: nil)
+    }
+    
+    func setupPopup() {
+        let padding = 20
+        let popupHeight = 150
+        
+        popup = UIView(frame: CGRect(x: padding, y: 600, width: Int(view.frame.width)-(2*padding), height: popupHeight))
+        popup!.backgroundColor = UIColor.midnightBlueColor()
+        
+        view.addSubview(popup)
+    }
+    
+    func setPopupVerticalPositionTo(newY: CGFloat) {
+        UIView.animateWithDuration(0.85, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0, options: nil, animations: {
+            self.popup!.frame.origin.y = newY
+            }, completion: nil)
     }
     
 }
