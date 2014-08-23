@@ -73,7 +73,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     
     func openPopup() {
         setBlackOverlayViewAlphaTo(0.5)
-        setPopupVerticalPositionTo(40)
+        
+        setPopupVerticalPositionTo(60) // meh, just guessed a value to center the popup between navbar and keyboard...
         addressTextField!.becomeFirstResponder()
     }
     
@@ -117,6 +118,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         addressField.placeholder = "Street, City, Province"
         addressField.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         addressField.font = UIFont.flatFontOfSize(14)
+        addressField.autocorrectionType = .No
         addressTextField = addressField
         popup!.addSubview(addressField)
         
@@ -127,6 +129,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         descriptionField.placeholder = "Description"
         descriptionField.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         descriptionField.font = UIFont.flatFontOfSize(14)
+        descriptionField.autocorrectionType = .No
         descriptionTextField = descriptionField
         popup!.addSubview(descriptionField)
         
