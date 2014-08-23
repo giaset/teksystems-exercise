@@ -72,6 +72,10 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func openPopup() {
+        // make sure textfields are cleared
+        addressTextField!.text = ""
+        descriptionTextField!.text = ""
+        
         setBlackOverlayViewAlphaTo(0.5)
         
         setPopupVerticalPositionTo(60) // meh, just guessed a value to center the popup between navbar and keyboard...
@@ -167,6 +171,23 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func submitButtonPressed() {
+        closePopup()
+        
+        var geocodoer = CLGeocoder()
+        
+        geocodoer.geocodeAddressString(addressTextField!.text, completionHandler: {
+            (placemarks: AnyObject[]!, err: NSError!) in
+            var placemarksArray = placemarks as NSArray
+            if (placemarksArray.count > 0) {
+                var topResult = placemarksArray.objectAtIndex(0) as CLPlacemark
+                var mapPlacemark = MKPlacemark(placemark: topResult)
+                
+                // Zoom and center on new pin
+                var region = MKCoordinateRegionMakeWithDistance(mapPlacemark.coordinate, 100, 100)
+                self.mapview!.addAnnotation(mapPlacemark)
+                self.mapview!.setRegion(region, animated: true)
+            }
+            })
     }
     
 }
