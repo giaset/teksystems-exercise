@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         // Stylin'
-        //UINavigationBar.appearance().barTintColor = UIColor.m
+        UINavigationBar.appearance().barTintColor = UIColor.sunflowerColor()
 
         self.window!.rootViewController = UINavigationController(rootViewController: TEKMapViewController())
         
