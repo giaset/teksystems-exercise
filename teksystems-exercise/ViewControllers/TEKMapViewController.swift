@@ -23,12 +23,16 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     
     var selectedAnnotation: MKAnnotation?
     
+    var myPlaces: NSMutableArray?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "My Places"
         
         navigationController.navigationBar.translucent = false
+        
+        loadPlaces()
         
         setupMapView()
         setupButton()
@@ -199,6 +203,11 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
                     var region = MKCoordinateRegionMakeWithDistance(pointAnnotation.coordinate, 100, 100)
                     self.mapview!.addAnnotation(pointAnnotation)
                     self.mapview!.setRegion(region, animated: true)
+                    
+                    // Save this pin
+                    var place = TEKPlace(annotation: pointAnnotation)
+                    self.myPlaces!.addObject(place)
+                    self.savePlaces()
                 }
             } else {
                 self.popError(err)
@@ -253,10 +262,37 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
             presentViewController(activityVC, animated: true, completion: nil)
         case 1: // delete
             mapview!.removeAnnotation(selectedAnnotation)
+            
+            // also delete this pin from our saved file
+            var place = TEKPlace(annotation: selectedAnnotation!)
+            myPlaces!.removeObject(place)
+            savePlaces()
         case 2: // cancel
             break
         default:
             break
+        }
+    }
+    
+    func savePlaces() {
+        NSKeyedArchiver.archiveRootObject(myPlaces!, toFile: "savedPlaces")
+    }
+    
+    func loadPlaces() {
+        myPlaces = NSKeyedUnarchiver.unarchiveObjectWithFile("savedPlaces") as? NSMutableArray
+        if (myPlaces == nil) {
+            myPlaces = NSMutableArray()
+        } else {
+            for i in 0..myPlaces!.count {
+                var place = myPlaces!.objectAtIndex(i) as TEKPlace
+                
+                // Create a MKPointAnnotation from this TEKPlace and add it to our map
+                var pointAnnotation = MKPointAnnotation()
+                pointAnnotation.title = place.title
+                pointAnnotation.subtitle = place.subtitle
+                pointAnnotation.coordinate = place.coordinate
+                mapview!.addAnnotation(pointAnnotation)
+            }
         }
     }
     

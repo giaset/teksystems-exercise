@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CoreLocation
+import MapKit
 
 class TEKPlace: NSObject, NSCoding {
     
@@ -30,6 +30,14 @@ class TEKPlace: NSObject, NSCoding {
         encoder.encodeObject(subtitle, forKey: "subtitle")
         encoder.encodeObject(coordinate.latitude, forKey: "lat")
         encoder.encodeObject(coordinate.longitude, forKey: "lng")
+    }
+    
+    init(annotation: MKAnnotation) {
+        title = annotation.title!
+        subtitle = annotation.subtitle!
+        coordinate = annotation.coordinate
+        
+        super.init()
     }
     
 }
