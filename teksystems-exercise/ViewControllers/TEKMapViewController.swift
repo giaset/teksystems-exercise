@@ -178,7 +178,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         var geocodoer = CLGeocoder()
         
         geocodoer.geocodeAddressString(addressTextField!.text, completionHandler: {
-            (placemarks: [AnyObject]!, err: NSError!) in
+            (placemarks: AnyObject[]!, err: NSError!) in
             if (err == nil) {
                 var placemarksArray = placemarks as NSArray
                 if (placemarksArray.count > 0) {
@@ -248,7 +248,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
         switch buttonIndex {
         case 0: // share
-            var stringToShare = selectedAnnotation!.title!+" ("+selectedAnnotation!.subtitle!+") - "/*+selectedAnnotation!.coordinate.latitude+", "+selectedAnnotation!.coordinate.longitude*/
+            var stringToShare = selectedAnnotation!.title!+" ("+selectedAnnotation!.subtitle!+")"
             var activityVC = UIActivityViewController(activityItems: [stringToShare], applicationActivities: nil)
             presentViewController(activityVC, animated: true, completion: nil)
         case 1: // delete
