@@ -238,9 +238,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         var actionSheet = UIActionSheet()
         actionSheet.delegate = self
         
-        actionSheet.addButtonWithTitle("Share Place (e-mail)")
-        actionSheet.addButtonWithTitle("Share Place (SMS)")
-        
+        actionSheet.addButtonWithTitle("Share Place")
         actionSheet.destructiveButtonIndex = actionSheet.addButtonWithTitle("Delete Place")
         actionSheet.cancelButtonIndex = actionSheet.addButtonWithTitle("Cancel")
         
@@ -249,13 +247,13 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
         switch buttonIndex {
-        case 0: // share by e-mail
-            println("zero")
-        case 1: // share by sms
-            println("one")
-        case 2: // delete
+        case 0: // share
+            var stringToShare = selectedAnnotation!.title!+" ("+selectedAnnotation!.subtitle!+") - "+selectedAnnotation!.coordinate.latitude+", "+selectedAnnotation!.coordinate.longitude
+            var activityVC = UIActivityViewController(activityItems: [stringToShare], applicationActivities: nil)
+            presentViewController(activityVC, animated: true, completion: nil)
+        case 1: // delete
             mapview!.removeAnnotation(selectedAnnotation)
-        case 3: // cancel
+        case 2: // cancel
             break
         default:
             break
