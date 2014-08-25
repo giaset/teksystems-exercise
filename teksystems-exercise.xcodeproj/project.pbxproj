@@ -12,6 +12,7 @@
 		684A18AF19A5509700956589 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 684A18AE19A5509700956589 /* Images.xcassets */; };
 		684A18BB19A5509700956589 /* teksystems_exerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */; };
 		684A18C519A550DB00956589 /* TEKMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18C419A550DB00956589 /* TEKMapViewController.swift */; };
+		68E5D01A19AB835800EB6252 /* TEKPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5D01919AB835800EB6252 /* TEKPlace.swift */; };
 		83F9BFB219C348C89EE8E868 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A9CDB4FFA74C6888A2347B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		684A18C419A550DB00956589 /* TEKMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TEKMapViewController.swift; path = ViewControllers/TEKMapViewController.swift; sourceTree = "<group>"; };
 		684BAC0519A84A2D00C6F0D9 /* teksystems-exercise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "teksystems-exercise-Bridging-Header.h"; sourceTree = "<group>"; };
 		684BAC0819A84AE100C6F0D9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		68E5D01919AB835800EB6252 /* TEKPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEKPlace.swift; sourceTree = "<group>"; };
 		90A9CDB4FFA74C6888A2347B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -97,6 +99,7 @@
 				684A18C619A550DF00956589 /* ViewControllers */,
 				684A18AE19A5509700956589 /* Images.xcassets */,
 				684A18AA19A5509700956589 /* Supporting Files */,
+				68E5D01919AB835800EB6252 /* TEKPlace.swift */,
 			);
 			path = "teksystems-exercise";
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68E5D01A19AB835800EB6252 /* TEKPlace.swift in Sources */,
 				684A18C519A550DB00956589 /* TEKMapViewController.swift in Sources */,
 				684A18AD19A5509700956589 /* AppDelegate.swift in Sources */,
 			);
