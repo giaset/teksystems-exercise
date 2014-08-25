@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class TEKMapViewController: UIViewController, MKMapViewDelegate {
+class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDelegate {
     
     var mapview: MKMapView?
     
@@ -230,7 +230,16 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        var actionSheet = UIActionSheet()
+        actionSheet.delegate = self
         
+        actionSheet.addButtonWithTitle("Share Place (e-mail)")
+        actionSheet.addButtonWithTitle("Share Place (SMS)")
+        
+        actionSheet.destructiveButtonIndex = actionSheet.addButtonWithTitle("Delete Place")
+        actionSheet.cancelButtonIndex = actionSheet.addButtonWithTitle("Cancel")
+        
+        actionSheet.showInView(view)
     }
     
 }
