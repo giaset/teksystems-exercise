@@ -177,17 +177,31 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         
         geocodoer.geocodeAddressString(addressTextField!.text, completionHandler: {
             (placemarks: AnyObject[]!, err: NSError!) in
-            var placemarksArray = placemarks as NSArray
-            if (placemarksArray.count > 0) {
-                var topResult = placemarksArray.objectAtIndex(0) as CLPlacemark
-                var mapPlacemark = MKPlacemark(placemark: topResult)
-                
-                // Zoom and center on new pin
-                var region = MKCoordinateRegionMakeWithDistance(mapPlacemark.coordinate, 100, 100)
-                self.mapview!.addAnnotation(mapPlacemark)
-                self.mapview!.setRegion(region, animated: true)
+            if (!err) {
+                var placemarksArray = placemarks as NSArray
+                if (placemarksArray.count > 0) {
+                    var topResult = placemarksArray.objectAtIndex(0) as CLPlacemark
+                    var mapPlacemark = MKPlacemark(placemark: topResult)
+                    
+                    // Zoom and center on new pin
+                    var region = MKCoordinateRegionMakeWithDistance(mapPlacemark.coordinate, 100, 100)
+                    self.mapview!.addAnnotation(mapPlacemark)
+                    self.mapview!.setRegion(region, animated: true)
+                }
+            } else {
+                self.popError(err)
             }
             })
+    }
+    
+    func popError(error: NSError!) {
+        // Legacy support for UIAlertViews, which are deprecated starting in iOS8
+        var errorAlert = UIAlertView()
+        errorAlert.title = "Error"
+        errorAlert.message = error.description
+        errorAlert.addButtonWithTitle("Ok")
+        
+        errorAlert.show()
     }
     
 }
