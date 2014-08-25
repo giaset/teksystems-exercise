@@ -191,6 +191,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
                     } else {
                         pointAnnotation.title = self.descriptionTextField!.text
                     }
+                    pointAnnotation.subtitle = mapPlacemark.title
                     
                     // Zoom and center on new pin
                     var region = MKCoordinateRegionMakeWithDistance(pointAnnotation.coordinate, 100, 100)
@@ -240,6 +241,10 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         actionSheet.cancelButtonIndex = actionSheet.addButtonWithTitle("Cancel")
         
         actionSheet.showInView(view)
+    }
+    
+    func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
+        
     }
     
 }
