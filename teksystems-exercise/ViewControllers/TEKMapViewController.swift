@@ -186,7 +186,11 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
                     // Create a MKPointAnnotation from this placemark, so that we can set custom title
                     var pointAnnotation = MKPointAnnotation()
                     pointAnnotation.coordinate = mapPlacemark.coordinate
-                    pointAnnotation.title = self.descriptionTextField!.text
+                    if (self.descriptionTextField!.text == "") {
+                        pointAnnotation.title = "Untitled Place"
+                    } else {
+                        pointAnnotation.title = self.descriptionTextField!.text
+                    }
                     
                     // Zoom and center on new pin
                     var region = MKCoordinateRegionMakeWithDistance(pointAnnotation.coordinate, 100, 100)
@@ -207,6 +211,26 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
         errorAlert.addButtonWithTitle("Ok")
         
         errorAlert.show()
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        // Don't override user location blue dot
+        if (annotation.isKindOfClass(MKUserLocation)) {
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("Annotation")
+        if (!annotationView) {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Annotation")
+        }
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as UIButton
+        
+        return annotationView
+    }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        
     }
     
 }
