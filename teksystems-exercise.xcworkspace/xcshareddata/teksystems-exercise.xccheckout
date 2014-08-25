@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>504EC70E-4F1C-47C1-B95B-98A2BE3D342A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>teksystems-exercise</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0C81B17CB349CBF1C34B5EF19D613908BFF0901D</key>
+		<string>https://github.com/giaset/teksystems-exercise.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>teksystems-exercise.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0C81B17CB349CBF1C34B5EF19D613908BFF0901D</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/giaset/teksystems-exercise.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0C81B17CB349CBF1C34B5EF19D613908BFF0901D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0C81B17CB349CBF1C34B5EF19D613908BFF0901D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>teksystems-exercise</string>
+		</dict>
+	</array>
+</dict>
+</plist>

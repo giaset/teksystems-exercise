@@ -41,7 +41,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         mapview!.delegate = self
         mapview!.showsUserLocation = true
         
-        view.addSubview(mapview)
+        view.addSubview(mapview!)
     }
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
@@ -95,7 +95,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         blackOverlayView!.backgroundColor = UIColor.blackColor()
         blackOverlayView!.alpha = 0
         
-        view.addSubview(blackOverlayView)
+        view.addSubview(blackOverlayView!)
     }
     
     func setBlackOverlayViewAlphaTo(alpha: CGFloat) {
@@ -163,7 +163,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         submitButton.addTarget(self, action: "submitButtonPressed", forControlEvents: .TouchUpInside)
         popup!.addSubview(submitButton)
         
-        view.addSubview(popup)
+        view.addSubview(popup!)
     }
     
     func setPopupVerticalPositionTo(newY: CGFloat) {
@@ -178,8 +178,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         var geocodoer = CLGeocoder()
         
         geocodoer.geocodeAddressString(addressTextField!.text, completionHandler: {
-            (placemarks: AnyObject[]!, err: NSError!) in
-            if (!err) {
+            (placemarks: [AnyObject]!, err: NSError!) in
+            if (err == nil) {
                 var placemarksArray = placemarks as NSArray
                 if (placemarksArray.count > 0) {
                     var topResult = placemarksArray.objectAtIndex(0) as CLPlacemark
@@ -223,7 +223,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         }
         
         var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("Annotation")
-        if (!annotationView) {
+        if (annotationView == nil) {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Annotation")
         }
         annotationView.canShowCallout = true
@@ -248,7 +248,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
         switch buttonIndex {
         case 0: // share
-            var stringToShare = selectedAnnotation!.title!+" ("+selectedAnnotation!.subtitle!+") - "+selectedAnnotation!.coordinate.latitude+", "+selectedAnnotation!.coordinate.longitude
+            var stringToShare = selectedAnnotation!.title!+" ("+selectedAnnotation!.subtitle!+") - "/*+selectedAnnotation!.coordinate.latitude+", "+selectedAnnotation!.coordinate.longitude*/
             var activityVC = UIActivityViewController(activityItems: [stringToShare], applicationActivities: nil)
             presentViewController(activityVC, animated: true, completion: nil)
         case 1: // delete
