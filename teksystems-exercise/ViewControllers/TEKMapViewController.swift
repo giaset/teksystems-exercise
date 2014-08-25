@@ -8,178 +8,299 @@
 
 import UIKit
 import MapKit
-import CoreLocation
-import QuartzCore
 
-class TEKMapViewController: UIViewController, MKMapViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate {
-    
-    let heightOfExposedMapView: CGFloat = 300
-    
-    let locationManager = CLLocationManager()
+class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDelegate {
     
     var mapview: MKMapView?
-    var mapViewBottomBorder = CALayer()
     
-    var tableview: UITableView?
-    
-    var dummyView: UIView?
-    
-    var isFullscreen = false
     var userLocationHasBeenFound = false
+    
+    var blackOverlayView: UIView?
+    
+    var popup: UIView?
+    var addressTextField: FUITextField?
+    var descriptionTextField: FUITextField?
+    
+    var selectedAnnotation: MKAnnotation?
+    
+    var myPlaces: NSMutableArray?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "My Places"
         
-        // Setup + button (top-right)
-        var addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addButtonPressed")
-        self.navigationItem.rightBarButtonItem = addButton
+        navigationController.navigationBar.translucent = false
         
         setupMapView()
-        setupTableView()
-    }
-    
-    func addButtonPressed() {
-        presentViewController(UINavigationController(rootViewController: TEKAddPinViewController()), animated: true, completion: nil)
+        loadPlaces()
+        setupButton()
+        setupBlackOverlayView()
+        setupPopup()
     }
 
     func setupMapView() {
-        mapview = MKMapView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        mapview = MKMapView(frame: view.frame)
         mapview!.delegate = self
+        mapview!.showsUserLocation = true
         
-        // Add a bottom border to the mapView to separate it from the tableView
-        var bottomBorderThickness: CGFloat = 1
-        mapViewBottomBorder.frame = CGRect(x: 0, y: heightOfExposedMapView-bottomBorderThickness, width: self.view.frame.width, height: bottomBorderThickness)
-        mapViewBottomBorder.backgroundColor = UIColor.lightGrayColor().CGColor
-        mapview!.layer.addSublayer(mapViewBottomBorder)
-        
-        // We need a CLLocationManager in iOS 8 to request location authorization before we can set showsUserLocation = true
-        locationManager.delegate = self
-        // This API call does not exist in iOS < 8, so check before you call it
-        if (locationManager.respondsToSelector("requestWhenInUseAuthorization")) {
-            locationManager.requestWhenInUseAuthorization()
-        } else {
-            // If not in iOS8, we can just call this right away
-            mapview!.showsUserLocation = true
-        }
-        
-        self.view.addSubview(mapview)
-        
-        // When the mapView is tapped, go fullscreen. Use a dummy view for this to intercept taps over the mapView
-        dummyView = UIView(frame: mapview!.frame)
-        var singleTap = UITapGestureRecognizer(target: self, action: "goFullscreen")
-        dummyView!.addGestureRecognizer(singleTap)
-        
-        self.view.addSubview(dummyView)
-    }
-    
-    func setupTableView() {
-        tableview = UITableView(frame: CGRect(x: 0, y: heightOfExposedMapView, width: self.view.frame.width, height: self.view.frame.height-heightOfExposedMapView+50)) // we add 100 pixels here to account for the bounce in our spring animation when the tableView pops back up, because otherwise it leaves our mapView exposed at the bottom
-        tableview!.delegate = self
-        tableview!.showsVerticalScrollIndicator = false
-        
-        self.view.addSubview(tableview)
-    }
-    
-    func goFullscreen() {
-        if (!isFullscreen) {
-            // First, hide the custom border we have drawn over the mapView
-            // We use removeFromSuperLayer first because modifying 'hidden' or 'opacity' seems to be animated by default...
-            mapViewBottomBorder.removeFromSuperlayer()
-            mapViewBottomBorder.hidden = true
-            
-            // Next, animate the tableView dropping down out of sight
-            setTableViewYTo(self.view.frame.height, onComplete: {
-                didFinish in
-                if (didFinish) {
-                    self.isFullscreen = true
-                }
-                })
-            
-            // Also stay centered on the same point as we were
-            adjustMapViewCenter(fullscreen: true)
-            
-            // Lastly, give us a back button to exit fullscreen mode
-            var backButton = UIBarButtonItem(title: "Close", style: .Bordered, target: self, action: "exitFullscreen")
-            self.navigationItem.leftBarButtonItem = backButton
-            
-            // One more thing... Disable the dummyView so it doesn't intercept touches over the map when in fullscreen
-            self.dummyView!.userInteractionEnabled = false
-        }
-    }
-    
-    func exitFullscreen() {
-        if (isFullscreen) {
-            // Bring the tableView back to its original position
-            setTableViewYTo(heightOfExposedMapView, onComplete: {
-                didFinish in
-                if (didFinish) {
-                    self.isFullscreen = false
-                    
-                    // Show the mapView's bottom Border again
-                    self.mapview!.layer.addSublayer(self.mapViewBottomBorder)
-                    self.mapViewBottomBorder.hidden = false
-                }
-                })
-            
-            // Hide the back button when not in fullscreen mode
-            self.navigationItem.leftBarButtonItem = nil
-            
-            // Also stay centered on the same point as we were
-            adjustMapViewCenter(fullscreen: false)
-            
-            // Re-enable the gestureRecognizer on the dummyView
-            self.dummyView!.userInteractionEnabled = true
-        }
-    }
-    
-    func setTableViewYTo(newY: CGFloat, onComplete: (Bool) -> ()) {
-        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: nil, animations: { self.tableview!.frame.origin.y = newY }, completion: onComplete)
+        view.addSubview(mapview!)
     }
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        // Only run this once
         if (!userLocationHasBeenFound) {
             userLocationHasBeenFound = true
             
-            // Initial zoom of map on user's location to get proper scale
-            var region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            // Zoom and center on user's location
+            var region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 100, 100)
             mapView.setRegion(region, animated: false)
+        }
+    }
+    
+    func setupButton() {
+        let padding = 5
+        let buttonHeight = 44
+        let statusAndNavBarHeight = 64
+        
+        var plusButton = FUIButton(frame: CGRect(x: padding, y: Int(view.frame.height)-padding-buttonHeight-statusAndNavBarHeight, width: Int(view.frame.width)-(2*padding), height: buttonHeight))
+        plusButton.buttonColor = UIColor.turquoiseColor()
+        plusButton.shadowColor = UIColor.greenSeaColor()
+        plusButton.shadowHeight = 3
+        plusButton.cornerRadius = 6
+        plusButton.setTitle("+ ADD ADDRESS", forState: .Normal)
+        plusButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
+        plusButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        plusButton.addTarget(self, action: "openPopup", forControlEvents: .TouchUpInside)
+        
+        view.addSubview(plusButton)
+    }
+    
+    func openPopup() {
+        // make sure textfields are cleared
+        addressTextField!.text = ""
+        descriptionTextField!.text = ""
+        
+        setBlackOverlayViewAlphaTo(0.5)
+        
+        setPopupVerticalPositionTo(60) // meh, just guessed a value to center the popup between navbar and keyboard...
+        addressTextField!.becomeFirstResponder()
+    }
+    
+    func closePopup() {
+        setBlackOverlayViewAlphaTo(0)
+        setPopupVerticalPositionTo(600)
+        view.endEditing(true)
+    }
+    
+    func setupBlackOverlayView() {
+        blackOverlayView = UIView(frame: view.frame)
+        blackOverlayView!.backgroundColor = UIColor.blackColor()
+        blackOverlayView!.alpha = 0
+        
+        view.addSubview(blackOverlayView!)
+    }
+    
+    func setBlackOverlayViewAlphaTo(alpha: CGFloat) {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0, options: nil, animations: { self.blackOverlayView!.alpha = alpha }, completion: nil)
+    }
+    
+    func setupPopup() {
+        let buttonPadding = 10
+        let popupPadding = 20
+        
+        let buttonHeight = 44
+        let popupHeight = (4*buttonPadding)+(3*buttonHeight)
+        
+        let popupWidth = Int(view.frame.width)-(2*popupPadding)
+        
+        popup = UIView(frame: CGRect(x: popupPadding, y: 600, width: popupWidth, height: popupHeight))
+        popup!.backgroundColor = UIColor.midnightBlueColor()
+        
+        let buttonWidth = (popupWidth-(3*buttonPadding))/2
+        let buttonY = popupHeight-buttonPadding-buttonHeight
+        
+        /* STREET/CITY/PROVINCE TEXTFIELD*/
+        var addressField = FUITextField(frame: CGRect(x: buttonPadding, y: buttonPadding, width: buttonPadding+(buttonWidth*2), height: buttonHeight))
+        addressField.textFieldColor = UIColor.whiteColor()
+        addressField.textColor = UIColor.asbestosColor()
+        addressField.placeholder = "Street, City, Province"
+        addressField.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        addressField.font = UIFont.flatFontOfSize(14)
+        addressField.autocorrectionType = .No
+        addressTextField = addressField
+        popup!.addSubview(addressField)
+        
+        /* DESCRIPTION TEXTFIELD*/
+        var descriptionField = FUITextField(frame: CGRect(x: buttonPadding, y: (2*buttonPadding)+buttonHeight, width: buttonPadding+(buttonWidth*2), height: buttonHeight))
+        descriptionField.textFieldColor = UIColor.whiteColor()
+        descriptionField.textColor = UIColor.asbestosColor()
+        descriptionField.placeholder = "Description"
+        descriptionField.edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        descriptionField.font = UIFont.flatFontOfSize(14)
+        descriptionField.autocorrectionType = .No
+        descriptionTextField = descriptionField
+        popup!.addSubview(descriptionField)
+        
+        /* CLOSE BUTTON */
+        var closeButton = FUIButton(frame: CGRect(x: buttonPadding, y: buttonY, width: buttonWidth, height: buttonHeight))
+        closeButton.buttonColor = UIColor.cloudsColor()
+        closeButton.shadowColor = UIColor.asbestosColor()
+        closeButton.shadowHeight = 3
+        closeButton.cornerRadius = 6
+        closeButton.setTitle("Close", forState: .Normal)
+        closeButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
+        closeButton.setTitleColor(UIColor.asbestosColor(), forState: .Normal)
+        closeButton.addTarget(self, action: "closePopup", forControlEvents: .TouchUpInside)
+        popup!.addSubview(closeButton)
+        
+        /* SUBMIT BUTTON */
+        var submitButton = FUIButton(frame: CGRect(x: (2*buttonPadding)+buttonWidth, y: buttonY, width: buttonWidth, height: buttonHeight))
+        submitButton.buttonColor = UIColor.turquoiseColor()
+        submitButton.shadowColor = UIColor.greenSeaColor()
+        submitButton.shadowHeight = 3
+        submitButton.cornerRadius = 6
+        submitButton.setTitle("Submit", forState: .Normal)
+        submitButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
+        submitButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        submitButton.addTarget(self, action: "submitButtonPressed", forControlEvents: .TouchUpInside)
+        popup!.addSubview(submitButton)
+        
+        view.addSubview(popup!)
+    }
+    
+    func setPopupVerticalPositionTo(newY: CGFloat) {
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: nil, animations: {
+            self.popup!.frame.origin.y = newY
+            }, completion: nil)
+    }
+    
+    func submitButtonPressed() {
+        closePopup()
+        
+        var geocodoer = CLGeocoder()
+        
+        geocodoer.geocodeAddressString(addressTextField!.text, completionHandler: {
+            (placemarks: AnyObject[]!, err: NSError!) in
+            if (err == nil) {
+                var placemarksArray = placemarks as NSArray
+                if (placemarksArray.count > 0) {
+                    var topResult = placemarksArray.objectAtIndex(0) as CLPlacemark
+                    var mapPlacemark = MKPlacemark(placemark: topResult)
+                    
+                    // Create a MKPointAnnotation from this placemark, so that we can set custom title
+                    var pointAnnotation = MKPointAnnotation()
+                    pointAnnotation.coordinate = mapPlacemark.coordinate
+                    if (self.descriptionTextField!.text == "") {
+                        pointAnnotation.title = "Untitled Place"
+                    } else {
+                        pointAnnotation.title = self.descriptionTextField!.text
+                    }
+                    pointAnnotation.subtitle = mapPlacemark.title
+                    
+                    // Zoom and center on new pin
+                    var region = MKCoordinateRegionMakeWithDistance(pointAnnotation.coordinate, 100, 100)
+                    self.mapview!.addAnnotation(pointAnnotation)
+                    self.mapview!.setRegion(region, animated: true)
+                    
+                    // Save this pin
+                    var place = TEKPlace(annotation: pointAnnotation)
+                    self.myPlaces!.addObject(place)
+                    self.savePlaces()
+                }
+            } else {
+                self.popError(err)
+            }
+            })
+    }
+    
+    func popError(error: NSError!) {
+        // Legacy support for UIAlertViews, which are deprecated starting in iOS8
+        var errorAlert = UIAlertView()
+        errorAlert.title = "Error"
+        errorAlert.message = error.description
+        errorAlert.addButtonWithTitle("Ok")
+        
+        errorAlert.show()
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        // Don't override user location blue dot
+        if (annotation.isKindOfClass(MKUserLocation)) {
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("Annotation")
+        if (annotationView == nil) {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Annotation")
+        }
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as UIButton
+        
+        return annotationView
+    }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        selectedAnnotation = view.annotation
+        
+        var actionSheet = UIActionSheet()
+        actionSheet.delegate = self
+        
+        actionSheet.addButtonWithTitle("Share Place")
+        actionSheet.destructiveButtonIndex = actionSheet.addButtonWithTitle("Delete Place")
+        actionSheet.cancelButtonIndex = actionSheet.addButtonWithTitle("Cancel")
+        
+        actionSheet.showInView(view)
+    }
+    
+    func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex {
+        case 0: // share
+            var stringToShare = selectedAnnotation!.title!+" ("+selectedAnnotation!.subtitle!+")"
+            var activityVC = UIActivityViewController(activityItems: [stringToShare], applicationActivities: nil)
+            presentViewController(activityVC, animated: true, completion: nil)
+        case 1: // delete
+            mapview!.removeAnnotation(selectedAnnotation)
             
-            // Now correct our center to fit in the exposed mapView portion
-            adjustMapViewCenter(fullscreen: false)
+            // also delete this pin from our saved file
+            var place = TEKPlace(annotation: selectedAnnotation!)
+            myPlaces!.removeObject(place)
+            savePlaces()
+        case 2: // cancel
+            break
+        default:
+            break
         }
     }
     
-    // In iOS8, need to wait until user has authorized location before calling showsUserLocation = true
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if (status == .AuthorizedWhenInUse) {
-            mapview!.showsUserLocation = true
-        }
+    func savePlaces() {
+        var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as NSArray
+        var file = paths.objectAtIndex(0).stringByAppendingPathComponent("savedPlaces")
+        NSKeyedArchiver.archiveRootObject(myPlaces!, toFile: file)
     }
     
-    var deltaLatFor1px: CGFloat {
-        var distanceInPixelsBetweenRefPoints: CGFloat = 100
-        var referencePoint1 = mapview!.convertPoint(CGPoint(x: 0, y: 0), toCoordinateFromView: mapview)
-        var referencePoint2 = mapview!.convertPoint(CGPoint(x: 0, y: distanceInPixelsBetweenRefPoints), toCoordinateFromView: mapview)
-        var deltaLatBetweenRefPoints = referencePoint2.latitude - referencePoint1.latitude
-        return CGFloat(deltaLatBetweenRefPoints)/distanceInPixelsBetweenRefPoints
-    }
-    
-    // Shift our mapView's center upwards or downwards so that the blue dot is properly centered in the exposed portion
-    func adjustMapViewCenter(#fullscreen: Bool) {
-        var newCenter: CLLocationCoordinate2D
+    func loadPlaces() {
+        myPlaces = NSMutableArray()
         
-        var centerOffset = self.view.center.y - (heightOfExposedMapView/2)
-        var deltaLat = centerOffset * deltaLatFor1px
-        
-        if (fullscreen) {
-            newCenter = CLLocationCoordinate2D(latitude: mapview!.centerCoordinate.latitude-CLLocationDegrees(deltaLat), longitude: mapview!.centerCoordinate.longitude)
-        } else {
-            newCenter = CLLocationCoordinate2D(latitude: mapview!.centerCoordinate.latitude+CLLocationDegrees(deltaLat), longitude: mapview!.centerCoordinate.longitude)
+        // Load our saved places
+        var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as NSArray
+        var file = paths.objectAtIndex(0).stringByAppendingPathComponent("savedPlaces")
+        var loadedData = NSKeyedUnarchiver.unarchiveObjectWithFile(file) as NSArray
+        if (loadedData != nil) {
+            for i in 0..loadedData.count {
+                var place = loadedData.objectAtIndex(i) as TEKPlace
+                
+                // Add each place to our myPlaces array
+                myPlaces!.addObject(place)
+                
+                // Create a MKPointAnnotation from this TEKPlace and add it to our map
+                var pointAnnotation = MKPointAnnotation()
+                pointAnnotation.title = place.title
+                pointAnnotation.subtitle = place.subtitle
+                pointAnnotation.coordinate = place.coordinate
+                mapview!.addAnnotation(pointAnnotation)
+            }
         }
-        
-        mapview!.setCenterCoordinate(newCenter, animated: true)
     }
     
 }

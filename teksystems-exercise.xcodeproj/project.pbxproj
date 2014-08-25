@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		680C4BAC19A6885300A00DD7 /* TEKAddPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */; };
+		681A740219A84C9E000F920A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 684BAC0819A84AE100C6F0D9 /* CoreText.framework */; };
 		684A18AD19A5509700956589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18AC19A5509700956589 /* AppDelegate.swift */; };
 		684A18AF19A5509700956589 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 684A18AE19A5509700956589 /* Images.xcassets */; };
 		684A18BB19A5509700956589 /* teksystems_exerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */; };
 		684A18C519A550DB00956589 /* TEKMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A18C419A550DB00956589 /* TEKMapViewController.swift */; };
+		68E5D01A19AB835800EB6252 /* TEKPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5D01919AB835800EB6252 /* TEKPlace.swift */; };
+		83F9BFB219C348C89EE8E868 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A9CDB4FFA74C6888A2347B /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,7 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TEKAddPinViewController.swift; path = ViewControllers/TEKAddPinViewController.swift; sourceTree = "<group>"; };
+		145D3D3E2FD341F9A0D767F5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		684A18A719A5509700956589 /* teksystems-exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "teksystems-exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		684A18AB19A5509700956589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		684A18AC19A5509700956589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +36,10 @@
 		684A18B919A5509700956589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		684A18BA19A5509700956589 /* teksystems_exerciseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teksystems_exerciseTests.swift; sourceTree = "<group>"; };
 		684A18C419A550DB00956589 /* TEKMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TEKMapViewController.swift; path = ViewControllers/TEKMapViewController.swift; sourceTree = "<group>"; };
+		684BAC0519A84A2D00C6F0D9 /* teksystems-exercise-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "teksystems-exercise-Bridging-Header.h"; sourceTree = "<group>"; };
+		684BAC0819A84AE100C6F0D9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		68E5D01919AB835800EB6252 /* TEKPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEKPlace.swift; sourceTree = "<group>"; };
+		90A9CDB4FFA74C6888A2347B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681A740219A84C9E000F920A /* CoreText.framework in Frameworks */,
+				83F9BFB219C348C89EE8E868 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,12 +62,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		655F5EBBDC2D4C0FBAB88F94 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				684BAC0819A84AE100C6F0D9 /* CoreText.framework */,
+				90A9CDB4FFA74C6888A2347B /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		684A189E19A5509700956589 = {
 			isa = PBXGroup;
 			children = (
 				684A18A919A5509700956589 /* teksystems-exercise */,
 				684A18B719A5509700956589 /* teksystems-exerciseTests */,
 				684A18A819A5509700956589 /* Products */,
+				145D3D3E2FD341F9A0D767F5 /* Pods.xcconfig */,
+				655F5EBBDC2D4C0FBAB88F94 /* Frameworks */,
+				684BAC0519A84A2D00C6F0D9 /* teksystems-exercise-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +99,7 @@
 				684A18C619A550DF00956589 /* ViewControllers */,
 				684A18AE19A5509700956589 /* Images.xcassets */,
 				684A18AA19A5509700956589 /* Supporting Files */,
+				68E5D01919AB835800EB6252 /* TEKPlace.swift */,
 			);
 			path = "teksystems-exercise";
 			sourceTree = "<group>";
@@ -112,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				684A18C419A550DB00956589 /* TEKMapViewController.swift */,
-				680C4BAB19A6885300A00DD7 /* TEKAddPinViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -124,9 +144,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 684A18BE19A5509700956589 /* Build configuration list for PBXNativeTarget "teksystems-exercise" */;
 			buildPhases = (
+				112AAFD9D9814ACCA8F3D820 /* Check Pods Manifest.lock */,
 				684A18A319A5509700956589 /* Sources */,
 				684A18A419A5509700956589 /* Frameworks */,
 				684A18A519A5509700956589 /* Resources */,
+				33F87FD590664388B5314C0B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -166,6 +188,7 @@
 				TargetAttributes = {
 					684A18A619A5509700956589 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = PRZU7H23QD;
 					};
 					684A18B319A5509700956589 = {
 						CreatedOnToolsVersion = 6.0;
@@ -209,14 +232,47 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		112AAFD9D9814ACCA8F3D820 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		33F87FD590664388B5314C0B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		684A18A319A5509700956589 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68E5D01A19AB835800EB6252 /* TEKPlace.swift in Sources */,
 				684A18C519A550DB00956589 /* TEKMapViewController.swift in Sources */,
 				684A18AD19A5509700956589 /* AppDelegate.swift in Sources */,
-				680C4BAC19A6885300A00DD7 /* TEKAddPinViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,23 +374,36 @@
 		};
 		684A18BF19A5509700956589 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 145D3D3E2FD341F9A0D767F5 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "teksystems-exercise/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "teksystems-exercise-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		684A18C019A5509700956589 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 145D3D3E2FD341F9A0D767F5 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "teksystems-exercise/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "teksystems-exercise-Bridging-Header.h";
 			};
 			name = Release;
 		};
