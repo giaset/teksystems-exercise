@@ -21,6 +21,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     var addressTextField: FUITextField?
     var descriptionTextField: FUITextField?
     
+    var selectedAnnotation: MKAnnotation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -231,6 +233,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     }
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        selectedAnnotation = view.annotation
+        
         var actionSheet = UIActionSheet()
         actionSheet.delegate = self
         
@@ -244,7 +248,18 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     }
     
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
-        
+        switch buttonIndex {
+        case 0: // share by e-mail
+            println("zero")
+        case 1: // share by sms
+            println("one")
+        case 2: // delete
+            mapview!.removeAnnotation(selectedAnnotation)
+        case 3: // cancel
+            break
+        default:
+            break
+        }
     }
     
 }
