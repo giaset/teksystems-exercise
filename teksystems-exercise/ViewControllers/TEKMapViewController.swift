@@ -32,9 +32,8 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         
         navigationController.navigationBar.translucent = false
         
-        loadPlaces()
-        
         setupMapView()
+        loadPlaces()
         setupButton()
         setupBlackOverlayView()
         setupPopup()
@@ -275,16 +274,24 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
     }
     
     func savePlaces() {
-        NSKeyedArchiver.archiveRootObject(myPlaces!, toFile: "savedPlaces")
+        var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as NSArray
+        var file = paths.objectAtIndex(0).stringByAppendingPathComponent("savedPlaces")
+        NSKeyedArchiver.archiveRootObject(myPlaces!, toFile: file)
     }
     
     func loadPlaces() {
-        myPlaces = NSKeyedUnarchiver.unarchiveObjectWithFile("savedPlaces") as? NSMutableArray
-        if (myPlaces == nil) {
-            myPlaces = NSMutableArray()
-        } else {
-            for i in 0..myPlaces!.count {
-                var place = myPlaces!.objectAtIndex(i) as TEKPlace
+        myPlaces = NSMutableArray()
+        
+        // Load our saved places
+        var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as NSArray
+        var file = paths.objectAtIndex(0).stringByAppendingPathComponent("savedPlaces")
+        var loadedData = NSKeyedUnarchiver.unarchiveObjectWithFile(file) as NSArray
+        if (loadedData != nil) {
+            for i in 0..loadedData.count {
+                var place = loadedData.objectAtIndex(i) as TEKPlace
+                
+                // Add each place to our myPlaces array
+                myPlaces!.addObject(place)
                 
                 // Create a MKPointAnnotation from this TEKPlace and add it to our map
                 var pointAnnotation = MKPointAnnotation()
