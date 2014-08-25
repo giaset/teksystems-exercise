@@ -183,9 +183,14 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate {
                     var topResult = placemarksArray.objectAtIndex(0) as CLPlacemark
                     var mapPlacemark = MKPlacemark(placemark: topResult)
                     
+                    // Create a MKPointAnnotation from this placemark, so that we can set custom title
+                    var pointAnnotation = MKPointAnnotation()
+                    pointAnnotation.coordinate = mapPlacemark.coordinate
+                    pointAnnotation.title = self.descriptionTextField!.text
+                    
                     // Zoom and center on new pin
-                    var region = MKCoordinateRegionMakeWithDistance(mapPlacemark.coordinate, 100, 100)
-                    self.mapview!.addAnnotation(mapPlacemark)
+                    var region = MKCoordinateRegionMakeWithDistance(pointAnnotation.coordinate, 100, 100)
+                    self.mapview!.addAnnotation(pointAnnotation)
                     self.mapview!.setRegion(region, animated: true)
                 }
             } else {
