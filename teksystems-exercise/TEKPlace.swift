@@ -15,21 +15,21 @@ class TEKPlace: NSObject, NSCoding {
     var subtitle: String
     var coordinate: CLLocationCoordinate2D
     
-    init(coder decoder: NSCoder!) {
-        title = decoder.decodeObjectForKey("title") as String
-        subtitle = decoder.decodeObjectForKey("subtitle") as String
-        var lat: CLLocationDegrees = decoder.decodeObjectForKey("lat") as CLLocationDegrees
-        var lng: CLLocationDegrees = decoder.decodeObjectForKey("lng") as CLLocationDegrees
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(title, forKey: "title")
+        aCoder.encodeObject(subtitle, forKey: "subtitle")
+        aCoder.encodeObject(coordinate.latitude, forKey: "lat")
+        aCoder.encodeObject(coordinate.longitude, forKey: "lng")
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        title = aDecoder.decodeObjectForKey("title") as String
+        subtitle = aDecoder.decodeObjectForKey("subtitle") as String
+        var lat: CLLocationDegrees = aDecoder.decodeObjectForKey("lat") as CLLocationDegrees
+        var lng: CLLocationDegrees = aDecoder.decodeObjectForKey("lng") as CLLocationDegrees
         coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
         
         super.init()
-    }
-    
-    func encodeWithCoder(encoder: NSCoder!) {
-        encoder.encodeObject(title, forKey: "title")
-        encoder.encodeObject(subtitle, forKey: "subtitle")
-        encoder.encodeObject(coordinate.latitude, forKey: "lat")
-        encoder.encodeObject(coordinate.longitude, forKey: "lng")
     }
     
     init(annotation: MKAnnotation) {
