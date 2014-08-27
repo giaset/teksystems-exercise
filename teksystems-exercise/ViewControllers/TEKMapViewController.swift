@@ -181,7 +181,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         var geocodoer = CLGeocoder()
         
         geocodoer.geocodeAddressString(addressTextField!.text, completionHandler: {
-            (placemarks: AnyObject[]!, err: NSError!) in
+            (placemarks: [AnyObject]!, err: NSError!) in
             if (err == nil) {
                 var placemarksArray = placemarks as NSArray
                 if (placemarksArray.count > 0) {
@@ -285,10 +285,10 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         // Load our saved places
         var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true) as NSArray
         var file = paths.objectAtIndex(0).stringByAppendingPathComponent("savedPlaces")
-        var loadedData = NSKeyedUnarchiver.unarchiveObjectWithFile(file) as NSArray
+        var loadedData = NSKeyedUnarchiver.unarchiveObjectWithFile(file) as? NSArray
         if (loadedData != nil) {
-            for i in 0..loadedData.count {
-                var place = loadedData.objectAtIndex(i) as TEKPlace
+            for i in 0...(loadedData!.count-1) {
+                var place = loadedData!.objectAtIndex(i) as TEKPlace
                 
                 // Add each place to our myPlaces array
                 myPlaces!.addObject(place)
