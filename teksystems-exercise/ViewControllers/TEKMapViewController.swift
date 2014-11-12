@@ -30,7 +30,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         
         title = "My Places"
         
-        navigationController.navigationBar.translucent = false
+        navigationController!.navigationBar.translucent = false
         
         setupMapView()
         loadPlaces()
@@ -69,7 +69,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         plusButton.shadowHeight = 3
         plusButton.cornerRadius = 6
         plusButton.setTitle("+ ADD ADDRESS", forState: .Normal)
-        plusButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
+        plusButton.titleLabel!.font = UIFont.boldFlatFontOfSize(16)
         plusButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         plusButton.addTarget(self, action: "openPopup", forControlEvents: .TouchUpInside)
         
@@ -149,7 +149,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         closeButton.shadowHeight = 3
         closeButton.cornerRadius = 6
         closeButton.setTitle("Close", forState: .Normal)
-        closeButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
+        closeButton.titleLabel!.font = UIFont.boldFlatFontOfSize(16)
         closeButton.setTitleColor(UIColor.asbestosColor(), forState: .Normal)
         closeButton.addTarget(self, action: "closePopup", forControlEvents: .TouchUpInside)
         popup!.addSubview(closeButton)
@@ -161,7 +161,7 @@ class TEKMapViewController: UIViewController, MKMapViewDelegate, UIActionSheetDe
         submitButton.shadowHeight = 3
         submitButton.cornerRadius = 6
         submitButton.setTitle("Submit", forState: .Normal)
-        submitButton.titleLabel.font = UIFont.boldFlatFontOfSize(16)
+        submitButton.titleLabel!.font = UIFont.boldFlatFontOfSize(16)
         submitButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         submitButton.addTarget(self, action: "submitButtonPressed", forControlEvents: .TouchUpInside)
         popup!.addSubview(submitButton)
